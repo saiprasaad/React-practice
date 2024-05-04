@@ -10,6 +10,10 @@ import Contact from './pages/Contact';
 import Navbar from './Navbar';
 import Profile from './pages/Profile';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useToggle } from './useToggle';
+import Cat from './pages/Cat';
+import { useCounter } from './pages/useCounter';
+import Person from './pages/Person';
 
 function Header() {
   return (
@@ -279,8 +283,36 @@ function UseQueryTutorial() {
   </div>
 }
 
+function TogglingApplication() {
+  const [isVisible, setIsVisible] = useToggle(false);
+  return <div className="App">{isVisible && <p style={{ color: 'black' }}>Hello</p>}<button onClick={setIsVisible}>{isVisible ? "Hide" : "Show"}</button></div>
+}
+
+function CustomHooks() {
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: true
+      }
+    }
+  });
+  return <div className="App">
+    <QueryClientProvider client={client}>
+      <Cat />
+    </QueryClientProvider>
+  </div>
+}
+
+function CustomHooksExercise() {
+  const {incrementCounter, decrementCounter, count} = useCounter();
+
+  return <div className="App">
+    <button onClick={decrementCounter}>-</button><p style={{color: 'black'}}>{count}</p><button onClick={incrementCounter}>+</button>
+  </div>
+}
+
 function App() {
-  return <div className="App"><Form /></div>
+  return <div className="App"><Person name="Saiprasaad" email="saiprasaad1999@gmail.com" age={24} friends={["Friend1", "Friend2"]} /></div>
 }
 
 

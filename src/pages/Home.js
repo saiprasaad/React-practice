@@ -5,8 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 
 function Home() {
     const { isPending, data, error, refetch } = useQuery({
-        queryKey: ["cat"], queryFn: () => {
-            return Axios.get("https://catfact.ninja/fact").then((res) => res.data);
+        queryKey: ["cat"], queryFn: async () => {
+            const res = await Axios.get("https://catfact.ninja/fact");
+            return res.data;
         }
     });
     return <h1>This is the home page <p>{!isPending ? data.fact : "Fetching"}</p>
